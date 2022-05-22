@@ -1,0 +1,17 @@
+import cv2
+FILENAME="APRINT.png"
+img1=cv2.imread("C:\\Users\\USER\\PycharmProjects\\CV\\2017.jpg")
+cv2.imshow("Class 10", img1)
+#cv2.imwrite(FILENAME,img)
+cv2.waitKey(0)
+B,G,R=cv2.split(img1)
+cv2.imshow("B",B)
+cv2.waitKey(0)
+cv2.imshow("G",G)
+cv2.waitKey(0)
+cv2.imshow("R",R)
+cv2.waitKey(0)
+img2=cv2.imread("C:\\Users\\USER\\PycharmProjects\\CV\\2011.jpg")
+cv2.imshow("Class 4", img2)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
