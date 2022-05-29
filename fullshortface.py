@@ -12,8 +12,9 @@ def short(image):
       # Convert the BGR image to RGB and process it with MediaPipe Face Detection.
       results = face_detection.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
       annotated_image = image.copy()
-      for detection in results.detections:
-        mp_drawing.draw_detection(annotated_image, detection)
+      if results.detections is not None:
+        for detection in results.detections:
+            mp_drawing.draw_detection(annotated_image, detection)
       return annotated_image
 
   # Run MediaPipe Face Detection with full range model.
@@ -22,6 +23,7 @@ def full(image):
       # Convert the BGR image to RGB and process it with MediaPipe Face Detection.
       results = face_detection.process(cv2.cvtColor(image, cv2.COLOR_BGR2RGB))
       annotated_image = image.copy()
-      for detection in results.detections:
-        mp_drawing.draw_detection(annotated_image, detection)
+      if results.detections is not None:
+        for detection in results.detections:
+            mp_drawing.draw_detection(annotated_image, detection)
       return annotated_image

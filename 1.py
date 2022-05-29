@@ -2,8 +2,6 @@ import cv2
 import numpy as np
 import mediapipe as mp
 
-import meshface
-
 NUM_FACE = 2
 
 class FaceLandMarks():
@@ -117,32 +115,71 @@ def pose(frame):
     t, _ = net.getPerfProfile()
     return frame
 
-def main():
-    detector = FaceLandMarks()
-    img = cv2.imread('rishab.jpg')
-    img, faces = detector.findFaceLandmark(img)
-    cv2.imshow(img)
-url = "http://192.168.1.201:4747/video"
-import time
-import fullshortface
-import meshface
-import segmentationblurselfie
-import posegraph3dhands
-#cp = cv2.VideoCapture(url)
-cp = cv2.VideoCapture(0)
-pTime = 0
-while(True):
-    i,frame=cp.read()
-    if frame is not None:
-        cTime = time.time()
-        fps = 1 / (cTime - pTime)
-        pTime = cTime
-        #frame=posegraph3dhands.pose(frame)
-        frame=meshface.mesh(frame)
-        #frame=segmentationblurselfie.segmentation(frame)
-        cv2.putText(frame, f'FPS:{int(fps)}', (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
-        cv2.imshow("Frame", frame)
-    q = cv2.waitKey(1)
-    if q==ord("q"):
-        break
-cv2.destroyAllWindows()
+if __name__ == '__main__':
+    # detector = FaceLandMarks()
+    # img = cv2.imread('rishab.jpg')
+    # img, faces = detector.findFaceLandmark(img)
+    # cv2.imshow(img)
+    # url = "http://192.168.1.201:4747/video"
+    import time
+    import fullshortface
+    short = False
+    full = False
+    import meshface
+    mesh=False
+    import segmentationblurselfie
+    blur=False
+    import posegraph3dhands
+    pose=False
+    import mediapipe_holistic
+    #cp = cv2.VideoCapture(url)
+    cp = cv2.VideoCapture(0)
+    pTime = 0
+    while(True):
+        i,frame=cp.read()
+        if frame is not None:
+            cTime = time.time()
+            fps = 1 / (cTime - pTime)
+            pTime = cTime
+            frame=mediapipe_holistic.holistic(frame)
+            if full:
+                frame = fullshortface.full(frame)
+            if short:
+                frame=fullshortface.short(frame)
+            if pose:
+                frame=posegraph3dhands.pose(frame)
+            if mesh:
+                frame=meshface.mesh(frame)
+            if blur:
+                frame=segmentationblurselfie.blur(frame)
+            cv2.putText(frame, f'FPS:{int(fps)}', (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            cv2.imshow("Frame", frame)
+        q = cv2.waitKey(1)
+        if q==ord("1"):
+            if pose:
+                pose=False
+            else:
+                pose=True
+        if q==ord("2"):
+            if blur:
+                blur=False
+            else:
+                blur=True
+        if q==ord("3"):
+            if mesh:
+                mesh=False
+            else:
+                mesh=True
+        if q==ord("4"):
+            if short:
+                short=False
+            else:
+                short=True
+        if q==ord("5"):
+            if full:
+                full=False
+            else:
+                full=True
+        if q==ord("q"):
+            break
+    cv2.destroyAllWindows()
