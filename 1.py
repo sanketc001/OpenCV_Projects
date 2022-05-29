@@ -141,7 +141,6 @@ if __name__ == '__main__':
             cTime = time.time()
             fps = 1 / (cTime - pTime)
             pTime = cTime
-            frame=mediapipe_holistic.holistic(frame)
             if full:
                 frame = fullshortface.full(frame)
             if short:
