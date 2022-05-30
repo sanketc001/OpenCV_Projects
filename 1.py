@@ -131,6 +131,7 @@ if __name__ == '__main__':
     blur=False
     import posegraph3dhands
     pose=False
+    face=False
     import mediapipe_holistic
     #cp = cv2.VideoCapture(url)
     cp = cv2.VideoCapture(0)
@@ -141,6 +142,15 @@ if __name__ == '__main__':
             cTime = time.time()
             fps = 1 / (cTime - pTime)
             pTime = cTime
+            if face:
+                face_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + '/haarcascade_frontalface_default.xml')
+                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                faces = face_classifier.detectMultiScale(gray, 1.04, 8)
+                if faces != ():
+                    for (x, y, w, h) in faces:
+                        cv2.rectangle(frame, (x, y), (x + w, y + h), (127, 0, 255), 2)
+            if blur:
+                frame=segmentationblurselfie.blur(frame)
             if full:
                 frame = fullshortface.full(frame)
             if short:
@@ -149,8 +159,6 @@ if __name__ == '__main__':
                 frame=posegraph3dhands.pose(frame)
             if mesh:
                 frame=meshface.mesh(frame)
-            if blur:
-                frame=segmentationblurselfie.blur(frame)
             cv2.putText(frame, f'FPS:{int(fps)}', (20, 70), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
             cv2.imshow("Frame", frame)
         q = cv2.waitKey(1)
@@ -179,6 +187,11 @@ if __name__ == '__main__':
                 full=False
             else:
                 full=True
+        if q==ord("6"):
+            if face:
+                face=False
+            else:
+                face=True
         if q==ord("q"):
             break
     cv2.destroyAllWindows()
