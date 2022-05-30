@@ -131,26 +131,23 @@ if __name__ == '__main__':
     blur=False
     import posegraph3dhands
     pose=False
-    import facedetection
+    import detection
     face=False
+    eye=False
     import mediapipe_holistic
     #cp = cv2.VideoCapture(url)
     cp = cv2.VideoCapture(0)
     pTime = 0
-    eye_classifier = cv2.CascadeClassifier(cv2.data.haarcascades + '/haarcascade_eye.xml')
     while(True):
         i,frame=cp.read()
         if frame is not None:
             cTime = time.time()
             fps = 1 / (cTime - pTime)
             pTime = cTime
-            if True:
-                gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                eyes = eye_classifier.detectMultiScale(frame,1.1,6)
-                for (ex, ey, ew, eh) in eyes:
-                    cv2.rectangle(frame, (ex, ey), (ex + ew, ey + eh), (255, 255, 0), 2)
+            if eye:
+                frame=detection.eye(frame)
             if face:
-                frame=facedetection.face(frame)
+                frame=detection.face(frame)
             if blur:
                 frame=segmentationblurselfie.blur(frame)
             if full:
@@ -194,6 +191,11 @@ if __name__ == '__main__':
                 face=False
             else:
                 face=True
+        if q==ord("7"):
+            if eye:
+                eye=False
+            else:
+                eye=True
         if q==ord("q"):
             break
     cv2.destroyAllWindows()
