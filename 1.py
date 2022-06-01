@@ -144,6 +144,8 @@ if __name__ == '__main__':
             cTime = time.time()
             fps = 1 / (cTime - pTime)
             pTime = cTime
+            frame=detection.body(frame)
+            frame=detection.car(frame)
             if eye:
                 frame=detection.eye(frame)
             if face:
@@ -151,7 +153,7 @@ if __name__ == '__main__':
             if blur:
                 frame=segmentationblurselfie.blur(frame)
             if full:
-                frame = fullshortface.full(frame)
+                frame=fullshortface.full(frame)
             if short:
                 frame=fullshortface.short(frame)
             if pose:
