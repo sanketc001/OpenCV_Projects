@@ -134,6 +134,8 @@ if __name__ == '__main__':
     import detection
     face=False
     eye=False
+    body=False
+    car=False
     import mediapipe_holistic
     #cp = cv2.VideoCapture(url)
     cp = cv2.VideoCapture(0)
@@ -144,8 +146,10 @@ if __name__ == '__main__':
             cTime = time.time()
             fps = 1 / (cTime - pTime)
             pTime = cTime
-            frame=detection.body(frame)
-            frame=detection.car(frame)
+            if body:
+                frame=detection.body(frame)
+            if car:
+                frame=detection.car(frame)
             if eye:
                 frame=detection.eye(frame)
             if face:
@@ -198,6 +202,16 @@ if __name__ == '__main__':
                 eye=False
             else:
                 eye=True
+        if q==ord("8"):
+            if body:
+                body=False
+            else:
+                body=True
+        if q==ord("9"):
+            if car:
+                car=False
+            else:
+                car=True
         if q==ord("q"):
             break
     cv2.destroyAllWindows()
