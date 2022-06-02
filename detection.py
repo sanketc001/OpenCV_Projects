@@ -27,7 +27,7 @@ def car(frame):
 
 def body(frame):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    eyes = body_classifier.detectMultiScale(frame, 1.1, 6)
+    eyes = body_classifier.detectMultiScale(frame, 1.04, 6)
     for (ex, ey, ew, eh) in eyes:
         cv2.rectangle(frame, (ex, ey), (ex + ew, ey + eh), (255, 255, 0), 2)
     return frame

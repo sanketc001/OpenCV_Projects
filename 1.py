@@ -139,6 +139,7 @@ if __name__ == '__main__':
     import mediapipe_holistic
     #cp = cv2.VideoCapture(url)
     cp = cv2.VideoCapture(0)
+    cp.set(cv2.CAP_PROP_FPS,60)
     pTime = 0
     while(True):
         i,frame=cp.read()
