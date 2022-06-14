@@ -6,7 +6,7 @@ def face(frame):
     face = face_recognition.face_locations(frame)[0]
     cv2.rectangle(frame, (face[3], face[0]),(face[1], face[2]), (255,0,255), 2)
     return frame
-def faces(frame): 
+def faces(frame):
     faces = face_recognition.face_locations(frame)
     for face in faces:
         cv2.rectangle(frame, (face[3], face[0]),(face[1], face[2]), (255,0,255), 2)
