@@ -1,0 +1,20 @@
+# Virtual environments and build output
+Lib/
+Scripts/
+Include/
+share/
+pyvenv.cfg
+HandGestureControl_SixthSense/HandGestureControl/Lib/
+HandGestureControl_SixthSense/HandGestureControl/Scripts/
+HandGestureControl_SixthSense/HandGestureControl/Include/
+HandGestureControl_SixthSense/HandGestureControl/pyvenv.cfg
+__pycache__/
+*.pyc
+*.whl
+First App/
+Second App/
+.idea/
+.env
+Sundar_pichai.png
+**/.idea/
+**/share/
